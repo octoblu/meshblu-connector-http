@@ -6,14 +6,27 @@
       "set-request": {
         "type": "object",
         "properties": {
-          "uri": {
-            "title": "URI/URL",
-            "type": "string"
-          },
-          "method":{
-            "title": "HTTP Method",
-            "type": "string",
-            "enum": ["GET", "POST", "PUT", "DELETE"]
+          "requestOptions": {
+            "title": "Request Options",
+            "type": "object",
+            "properties": {
+              "uri": {
+                "title": "URI/URL",
+                "type": "string"
+              },
+              "method":{
+                "title": "HTTP Method",
+                "type": "string",
+                "enum": ["GET", "POST", "PUT", "DELETE"],
+                "default": "GET"
+              },
+              "followAllRedirects": {
+                "title": "Follow All Redirects?",
+                "type": "boolean",
+                "default": true
+              }
+            },
+            "required": ["uri", "method"]
           },
           "headers": {
             "title": "Headers",
@@ -22,9 +35,12 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "type": "string"
+                  "title": "Key",
+                  "type": "string",
+                  "placeholder": "X-SOME-HEADER"
                 },
                 "value": {
+                  "title": "Value",
                   "type": "string"
                 }
               }
@@ -37,24 +53,28 @@
               "type": "object",
               "properties": {
                 "name": {
+                  "title": "Key",
                   "type": "string"
                 },
                 "value": {
+                  "title": "Value",
                   "type": "string"
                 }
               }
             }
           },
           "qs": {
-            "title": "Queries",
+            "title": "Query",
             "type": "array",
             "items": {
               "type": "object",
               "properties": {
                 "name": {
+                  "title": "Key",
                   "type": "string"
                 },
                 "value": {
+                  "title": "Value",
                   "type": "string"
                 }
               }
@@ -65,14 +85,9 @@
             "type": "string",
             "enum": ["JSON", "FORM_URL_ENCODED"],
             "default": "JSON"
-          },
-          "redirect": {
-            "title": "Follow All Redirects?",
-            "type": "boolean",
-            "default": true
           }
         },
-        "required": ["some-opt", "another-some-opt"]
+        "required": ["requestOptions", "encoding"]
       }
     }
   }

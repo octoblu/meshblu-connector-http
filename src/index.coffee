@@ -1,21 +1,29 @@
+_               = require 'lodash'
 {EventEmitter}  = require 'events'
 debug           = require('debug')('meshblu-connector-http:index')
-_               = require 'lodash'
 request         = require 'request'
 
 class Http extends EventEmitter
-  constructor: ->
-    debug 'Http constructed'
+  onMessage: (message={}) =>
+    requestOptions = @formatRequest message.payload
+    debug 'requestOptions', requestOptions
+    return unless requestOptions.uri?
+    @sendRequest requestOptions
 
-  onMessage: (message) =>
-    { req } = message.payload
-    return unless req?
-    req = formatRequest req
-    debug 'got valid message', request
+  emitError: (error) =>
+    @emit 'message', {
+      devices: ['*'],
+      topic: 'error',
+      payload: {
+        error
+      }
+    }
 
-  sendRequest: (req) =>
-    request req, (err, response, body) =>
-      return @emit 'error', err if err?
+  sendRequest: (requestOptions) =>
+    debug 'requestOptions', requestOptions
+    request requestOptions, (error, response, body) =>
+      return @emitError error if error?
+      debug 'emitting request'
       message =
         devices: ['*']
         topic: 'http-response'
@@ -24,37 +32,26 @@ class Http extends EventEmitter
           body: body
       @emit 'message', message
 
-  formatRequest: (req) =>
-    { headers, body, qs, encoding, uri, method, redirect } = req
-
-    config =
-      headers:
-        'Accept': 'application/json'
-        'User-Agent': 'Octoblu/1.0.0'
-        'x-li-format': 'json'
-      uri: uri
-      method: method
-      followAllRedirects: redirect
-
-    config.headers = _.extend(config.headers, mapKeyValuePairs headers) if headers?
-    config.form = mapKeyValuePairs body unless encoding == 'JSON' && !body?
-    config.json = mapKeyValuePairs body if body?
-    config.qs = mapKeyValuePairs qs if qs?
-    return config
-
+  formatRequest: ({ requestOptions={}, encoding='JSON', headers, qs, body }) =>
+    newRequestOptions = {}
+    newRequestOptions.headers = _.assign {
+      'Accept': 'application/json'
+      'User-Agent': 'Octoblu/1.0.0'
+      'x-li-format': 'json'
+    }, @mapKeyValuePairs(headers)
+    newRequestOptions.form = @mapKeyValuePairs body if encoding == 'FORM_URL_ENCODED'
+    newRequestOptions.json = @mapKeyValuePairs body if encoding == 'JSON'
+    newRequestOptions.qs   = @mapKeyValuePairs qs
+    newRequestOptions = JSON.parse JSON.stringify newRequestOptions
+    baseOptions = {}
+    baseOptions.json = true if encoding == 'JSON'
+    return _.assign(baseOptions, requestOptions, newRequestOptions)
 
   mapKeyValuePairs: (toMap) =>
     return unless toMap?
     mapped = {}
-    _.forEach toMap, (item) =>
+    _.each toMap, (item={}) =>
       mapped[item.name] = item.value
-
-  onConfig: (device) =>
-    { @options } = device
-    debug 'on config', @options
-
-  start: (device) =>
-    { @uuid } = device
-    debug 'started', @uuid
+    return mapped
 
 module.exports = Http

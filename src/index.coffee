@@ -5,6 +5,7 @@ request         = require 'request'
 
 class Http extends EventEmitter
   onMessage: (message={}) =>
+    return unless message.payload?
     requestOptions = @formatRequest message.payload
     debug 'requestOptions', requestOptions
     return unless requestOptions.uri?

@@ -12,7 +12,8 @@ class Http extends EventEmitter
     return unless req?
     req = formatRequest req
     debug 'got valid message', request
-    
+
+  sendRequest: (req) =>
     request req, (err, response, body) =>
       return @emit 'error', err if err?
       message =

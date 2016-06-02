@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-http",
-  "version": "1.0.0",
+  "version": "0.1.2",
   "description": "Meshblu Connector ",
   "homepage": "https://github.com/octoblu/http",
   "bugs": "https://github.com/octoblu/http/issues",
@@ -28,8 +28,10 @@
   "dependencies": {
     "coffee-script": "^1.10.0",
     "debug": "^2.2.0",
+    "lodash": "^4.13.1",
     "meshblu-config": "^4.0.0",
-    "meshblu-connector-runner": "^6.0.0"
+    "meshblu-connector-runner": "^6.0.0",
+    "request": "^2.72.0"
   },
   "meshbluConnector": {
     "githubSlug": "octoblu/meshblu-connector-http",

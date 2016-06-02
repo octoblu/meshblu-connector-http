@@ -1,55 +1,75 @@
 {
   "schemas": {
     "version": "1.0.0",
-    "form": {
-      "message": {
-        "example-01": {
-          "angular": {
-            "schema": ["*"]
-          }
-        }
-      }
-    },
-    "configure": {
-      "my-default-config": {
+    "configure": {},
+    "message": {
+      "set-request": {
         "type": "object",
         "properties": {
-          "options": {
-            "type" : "object",
-            "properties" : {
-              "example" : {
-                "type" : "string"
+          "uri": {
+            "title": "URI/URL",
+            "type": "string"
+          },
+          "method":{
+            "title": "HTTP Method",
+            "type": "string",
+            "enum": ["GET", "POST", "PUT", "DELETE"]
+          },
+          "headers": {
+            "title": "Headers",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
               }
             }
-          }
-        }
-      }
-    },
-    "message": {
-      "example-message-01": {
-        "type": "object",
-        "properties": {
-          "example-opt": {
-            "type": "string"
           },
-          "another-example-opt":{
-            "type": "string"
-          }
-        },
-        "x-form-schema": {
-          "angular": "message.example-01.angular"
-        },
-        "x-group-name": "Message Example Group",
-        "required": ["example-opt", "another-example-opt"]
-      },
-      "example-message-02": {
-        "type": "object",
-        "properties": {
-          "some-opt": {
-            "type": "string"
+          "body": {
+            "title": "Body",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
           },
-          "another-some-opt":{
-            "type": "string"
+          "qs": {
+            "title": "Queries",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "encoding": {
+            "title": "Encoding",
+            "type": "string",
+            "enum": ["JSON", "FORM_URL_ENCODED"],
+            "default": "JSON"
+          },
+          "redirect": {
+            "title": "Follow All Redirects?",
+            "type": "boolean",
+            "default": true
           }
         },
         "required": ["some-opt", "another-some-opt"]

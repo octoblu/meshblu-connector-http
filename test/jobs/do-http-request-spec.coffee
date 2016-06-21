@@ -3,11 +3,10 @@
 describe 'DoHttpRequest', ->
   beforeEach ->
     @connector =
-      httpManager:
-        formatRequest:
-          sinon.spy ({requestOptions}) -> requestOptions
-        sendRequest:
-          sinon.stub().callsArg(1)
+      formatRequest:
+        sinon.spy ({requestOptions}) -> requestOptions
+      sendRequest:
+        sinon.stub().callsArg(1)
 
     @sut = new job {@connector}
 
@@ -23,14 +22,14 @@ describe 'DoHttpRequest', ->
     it 'should not error', ->
       expect(@error).not.to.exist
 
-    it 'should call httpManager.formatRequest', ->
-      expect(@connector.httpManager.formatRequest.calledOnce).to.be.true
+    it 'should call @connector.formatRequest', ->
+      expect(@connector.formatRequest.calledOnce).to.be.true
 
-    it 'should call httpManager.sendRequest', ->
-      expect(@connector.httpManager.sendRequest.calledOnce).to.be.true
+    it 'should call @connector.sendRequest', ->
+      expect(@connector.sendRequest.calledOnce).to.be.true
 
-    it 'should call httpManager formatRequest and sendRequest functions in the right order', ->
-      expect(@connector.httpManager.formatRequest.calledBefore @connector.httpManager.sendRequest).to.be.true
+    it 'should call @connector formatRequest and sendRequest functions in the right order', ->
+      expect(@connector.formatRequest.calledBefore @connector.sendRequest).to.be.true
 
   context 'when given no data in message', ->
     beforeEach (done) ->

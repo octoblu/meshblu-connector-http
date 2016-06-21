@@ -8,10 +8,10 @@ class HttpRequestJob
   do: ({data}, callback) =>
     return callback @_userError(422, 'data is required') unless data?
     debug {data}
-    requestOptions = @connector.httpManager.formatRequest data
+    requestOptions = @connector.formatRequest data
     debug 'requestOptions', requestOptions
     return callback @_userError(422, 'data.requestOptions.uri is required') unless requestOptions?.uri?
-    @connector.httpManager.sendRequest requestOptions, callback
+    @connector.sendRequest requestOptions, callback
 
   _userError: (code, message) =>
     error = new Error message

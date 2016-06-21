@@ -2,8 +2,8 @@
   "name": "meshblu-connector-http",
   "version": "2.0.1",
   "description": "Meshblu Connector ",
-  "homepage": "https://github.com/octoblu/http",
-  "bugs": "https://github.com/octoblu/http/issues",
+  "homepage": "https://github.com/octoblu/meshblu-connector-http",
+  "bugs": "https://github.com/octoblu/meshblu-connector-http/issues",
   "author": {
     "name": "Octoblu",
     "url": "https://github.com/octoblu"
@@ -11,7 +11,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/octoblu/http.git"
+    "url": "https://github.com/octoblu/meshblu-connector-http.git"
   },
   "scripts": {
     "start": "meshblu-connector-runner",
@@ -39,8 +39,7 @@
     "meshblu-connector-schema-generator": "^2.0.0"
   },
   "meshbluConnector": {
-    "githubSlug": "octoblu/meshblu-connector-http",
-    "schemasUrl": "https://raw.githubusercontent.com/octoblu/meshblu-connector-http/v1.0.0/schemas.json"
+    "githubSlug": "octoblu/meshblu-connector-http"
   },
   "platformDependencies": {
     "darwin": [],

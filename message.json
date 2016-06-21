@@ -1,0 +1,9 @@
+{
+  "devices": ["cd0ebdb2-be81-4da7-a83c-4ae323aa8a54"],
+  "payload": {
+    "requestOptions": {
+      "uri": "https://meshblu.octoblu.com/status",
+      "method": "GET"
+    }
+  }
+}

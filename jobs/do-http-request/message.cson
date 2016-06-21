@@ -1,0 +1,19 @@
+title: 'DoHttpRequest'
+type: 'object'
+properties:
+  data:
+    type: 'object'
+    properties:
+      requestOptions:
+        type: 'object'
+      encoding:
+        type: 'string'
+      headers:
+        type: 'object'
+      qs:
+        type: 'object'
+      body:
+        type: 'object'
+    required: [
+      'requestOptions'
+    ]

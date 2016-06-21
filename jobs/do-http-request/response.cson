@@ -1,0 +1,17 @@
+title: 'DoSomething'
+type: 'object'
+properties:
+  data:
+    type: 'object'
+    properties:
+      devices:
+        type: 'array'
+      topic:
+        type: 'string'
+      payload:
+        type: 'object'
+
+    required: [
+      'devices'
+      'topic'
+    ]

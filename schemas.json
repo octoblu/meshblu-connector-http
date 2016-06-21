@@ -1,94 +1,205 @@
 {
   "schemas": {
-    "version": "1.0.0",
-    "configure": {},
+    "configure": {
+    },
+    "form": {
+      "configure": {
+      },
+      "message": {
+        "DoHttpRequest": {
+          "angular": [
+            {
+              "key": "data.requestOptions"
+            },
+            {
+              "key": "data.encoding"
+            },
+            {
+              "key": "data.qs"
+            },
+            {
+              "key": "data.headers"
+            },
+            {
+              "key": "data.body"
+            }
+          ]
+        }
+      }
+    },
     "message": {
-      "set-request": {
-        "type": "object",
+      "DoHttpRequest": {
         "properties": {
-          "requestOptions": {
-            "title": "Request Options",
-            "type": "object",
+          "data": {
             "properties": {
-              "uri": {
-                "title": "URI/URL",
+              "body": {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "title": "Key",
+                      "type": "string"
+                    },
+                    "value": {
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "title": "Body",
+                "type": "array"
+              },
+              "encoding": {
+                "default": "JSON",
+                "enum": [
+                  "JSON",
+                  "FORM_URL_ENCODED"
+                ],
+                "title": "Encoding",
                 "type": "string"
               },
-              "method":{
-                "title": "HTTP Method",
-                "type": "string",
-                "enum": ["GET", "POST", "PUT", "DELETE"],
-                "default": "GET"
+              "headers": {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "placeholder": "X-SOME-HEADER",
+                      "title": "Key",
+                      "type": "string"
+                    },
+                    "value": {
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "title": "Headers",
+                "type": "array"
               },
-              "followAllRedirects": {
-                "title": "Follow All Redirects?",
-                "type": "boolean",
-                "default": true
+              "qs": {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "title": "Key",
+                      "type": "string"
+                    },
+                    "value": {
+                      "title": "Value",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "title": "Query",
+                "type": "array"
+              },
+              "requestOptions": {
+                "properties": {
+                  "followAllRedirects": {
+                    "default": true,
+                    "title": "Follow All Redirects?",
+                    "type": "boolean"
+                  },
+                  "method": {
+                    "default": "GET",
+                    "enum": [
+                      "GET",
+                      "POST",
+                      "PUT",
+                      "DELETE"
+                    ],
+                    "title": "HTTP Method",
+                    "type": "string"
+                  },
+                  "uri": {
+                    "title": "URI/URL",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "uri",
+                  "method"
+                ],
+                "title": "Request Options",
+                "type": "object"
               }
             },
-            "required": ["uri", "method"]
+            "required": [
+              "requestOptions",
+              "encoding"
+            ],
+            "type": "object"
           },
-          "headers": {
-            "title": "Headers",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "title": "Key",
-                  "type": "string",
-                  "placeholder": "X-SOME-HEADER"
-                },
-                "value": {
-                  "title": "Value",
-                  "type": "string"
-                }
+          "metadata": {
+            "properties": {
+              "jobType": {
+                "default": "DoHttpRequest",
+                "enum": [
+                  "DoHttpRequest"
+                ],
+                "type": "string"
+              },
+              "respondTo": {
               }
-            }
-          },
-          "body": {
-            "title": "Body",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "title": "Key",
-                  "type": "string"
-                },
-                "value": {
-                  "title": "Value",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "qs": {
-            "title": "Query",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "title": "Key",
-                  "type": "string"
-                },
-                "value": {
-                  "title": "Value",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "encoding": {
-            "title": "Encoding",
-            "type": "string",
-            "enum": ["JSON", "FORM_URL_ENCODED"],
-            "default": "JSON"
+            },
+            "required": [
+              "jobType"
+            ],
+            "type": "object"
           }
         },
-        "required": ["requestOptions", "encoding"]
+        "required": [
+          "metadata"
+        ],
+        "title": "DoHttpRequest",
+        "type": "object",
+        "x-form-schema": {
+          "angular": "message.DoHttpRequest.angular"
+        },
+        "x-response-schema": "DoHttpRequest"
       }
-    }
+    },
+    "response": {
+      "DoHttpRequest": {
+        "properties": {
+          "data": {
+            "properties": {
+              "devices": {
+                "type": "array"
+              },
+              "payload": {
+                "type": "object"
+              },
+              "topic": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "devices",
+              "topic"
+            ],
+            "type": "object"
+          },
+          "metadata": {
+            "properties": {
+              "code": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "status",
+              "code"
+            ],
+            "type": "object"
+          }
+        },
+        "title": "DoSomething",
+        "type": "object"
+      }
+    },
+    "version": "2.0.0"
   }
 }

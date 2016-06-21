@@ -1,3 +1,7 @@
 angular: [
-  { key: "data.example" }
+  { key: 'data.requestOptions' }
+  { key: 'data.encoding' }
+  { key: 'data.qs' }
+  { key: 'data.headers' }
+  { key: 'data.body' }
 ]

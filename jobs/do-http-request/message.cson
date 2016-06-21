@@ -3,17 +3,64 @@ type: 'object'
 properties:
   data:
     type: 'object'
+    required: ['requestOptions', 'encoding']
     properties:
       requestOptions:
+        title: 'Request Options'
         type: 'object'
-      encoding:
-        type: 'string'
+        properties:
+          uri:
+            title: 'URI/URL'
+            type: 'string'
+          method:
+            title: 'HTTP Method'
+            type: 'string'
+            enum: ['GET', 'POST', 'PUT', 'DELETE']
+            default: 'GET'
+          followAllRedirects:
+            title: 'Follow All Redirects?'
+            type: 'boolean'
+            default: true
+        required: ['uri', 'method']
       headers:
-        type: 'object'
-      qs:
-        type: 'object'
+        title: 'Headers'
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            name:
+              title: 'Key'
+              type: 'string'
+              placeholder: 'X-SOME-HEADER'
+            value:
+              title: 'Value'
+              type: 'string'
       body:
-        type: 'object'
-    required: [
-      'requestOptions'
-    ]
+        title: 'Body'
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            name:
+              title: 'Key'
+              type: 'string'
+            value:
+              title: 'Value'
+              type: 'string'
+      qs:
+        title: 'Query'
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            name:
+              title: 'Key'
+              type: 'string'
+            value:
+              title: 'Value'
+              type: 'string'
+      encoding:
+        title: 'Encoding'
+        type: 'string'
+        enum: ['JSON', 'FORM_URL_ENCODED']
+        default: 'JSON'

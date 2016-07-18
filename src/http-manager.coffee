@@ -13,12 +13,7 @@ class HttpManager
       metadata =
         code: response?.statusCode
         status: http.STATUS_CODES[response?.statusCode]
-      data =
-        devices: ['*']
-        topic: 'http-response'
-        payload:
-          statusCode: response?.statusCode
-          body: body
+      data = body
       callback null, {metadata, data}
 
   formatRequest: ({ requestOptions={}, encoding='JSON', headers, qs, body }={}) =>

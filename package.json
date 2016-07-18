@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-http",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Meshblu Connector ",
   "homepage": "https://github.com/octoblu/meshblu-connector-http",
   "bugs": "https://github.com/octoblu/meshblu-connector-http/issues",
@@ -34,9 +34,9 @@
     "fs-cson": "^0.3.2",
     "lodash": "^4.13.1",
     "meshblu-config": "^4.0.0",
-    "meshblu-connector-runner": "^8.0.0",
-    "request": "^2.72.0",
-    "meshblu-connector-schema-generator": "^2.0.0"
+    "meshblu-connector-runner": "^8.3.0",
+    "meshblu-connector-schema-generator": "^2.1.0",
+    "request": "^2.73.0"
   },
   "meshbluConnector": {
     "githubSlug": "octoblu/meshblu-connector-http"

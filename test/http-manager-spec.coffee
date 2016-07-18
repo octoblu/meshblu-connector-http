@@ -118,12 +118,7 @@ describe 'HttpManager', ->
             metadata:
               code: 200
               status: "OK"
-            data:
-              devices: ["*"]
-              topic: "http-response"
-              payload:
-                statusCode: 200
-                body: "bar"
+            data: "bar"
           }
 
       describe 'when called with a bad url and callback', ->
@@ -142,12 +137,7 @@ describe 'HttpManager', ->
             metadata:
               code: 500
               status: "Internal Server Error"
-            data:
-              devices: ["*"]
-              topic: "http-response"
-              payload:
-                statusCode: 500
-                body: "oops"
+            data: "oops"
           }
 
       describe 'when called with an invalid host and callback', ->

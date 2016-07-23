@@ -1,6 +1,6 @@
 {
   "name": "meshblu-connector-http",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Meshblu Connector ",
   "homepage": "https://github.com/octoblu/meshblu-connector-http",
   "bugs": "https://github.com/octoblu/meshblu-connector-http/issues",

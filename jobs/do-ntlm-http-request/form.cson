@@ -1,0 +1,24 @@
+angular: [
+  { key: 'data.requestOptions.uri' }
+  {
+    type: 'fieldset'
+    title: 'Authentication'
+    items: [
+      'data.authentication.username'
+      'data.authentication.password'
+      'data.authentication.hostname'
+    ]
+  }
+  {
+    type: "fieldset"
+    title: "Request Options"
+    items: [
+      { key: "data.requestOptions.method" }
+      { key: "data.requestOptions.followAllRedirects" }
+      { key: "data.encoding" }
+      { key: "data.qs" }
+      { key: "data.headers" }
+      { key: "data.body" }
+    ]
+  }
+]

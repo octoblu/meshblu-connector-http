@@ -1,13 +1,29 @@
-title: 'Do HTTP Request'
+title: 'Do NTLM HTTP Request'
 type: 'object'
 properties:
   data:
     type: 'object'
-    required: ['requestOptions', 'encoding']
+    required: ['authentication', 'requestOptions', 'encoding']
     properties:
+      authentication:
+        title: 'Authentication information'
+        type: 'object'
+        required: ['username', 'password']
+        properties:
+          username:
+            title: 'Username'
+            type: 'string'
+          password:
+            title: 'Password'
+            type: 'string'
+          hostname:
+            title: 'Auth Hostname'
+            description: 'Leave blank to infer from username'
+            type: 'string'
       requestOptions:
         title: 'Request Options'
         type: 'object'
+        required: ['uri', 'method']
         properties:
           uri:
             title: 'URI/URL'
@@ -21,7 +37,6 @@ properties:
             title: 'Follow All Redirects?'
             type: 'boolean'
             default: true
-        required: ['uri', 'method']
       headers:
         title: 'Headers'
         type: 'array'

@@ -1,0 +1,5 @@
+title: 'DoHttpRequest'
+type: 'object'
+properties:
+  data:
+    type: 'object'

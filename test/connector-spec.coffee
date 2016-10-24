@@ -1,3 +1,6 @@
+{afterEach, beforeEach, describe, it} = global
+{expect} = require 'chai'
+
 Connector = require '../'
 
 describe 'Connector', ->

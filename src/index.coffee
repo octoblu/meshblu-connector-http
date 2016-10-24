@@ -6,11 +6,14 @@ class Connector extends EventEmitter
   constructor: ->
     @httpManager = new HttpManager
 
-  sendRequest: =>
-    @httpManager.sendRequest.apply @httpManager, arguments
+  sendRequest: (requestOptions, callback) =>
+    @httpManager.sendRequest requestOptions, callback
 
-  formatRequest: =>
-    @httpManager.formatRequest.apply @httpManager, arguments
+  sendNtlmRequest: (authentication, requestOptions, callback) =>
+    @httpManager.sendNtlmRequest authentication, requestOptions, callback
+
+  formatRequest: ({ requestOptions, encoding, headers, qs, body }) =>
+    @httpManager.formatRequest { requestOptions, encoding, headers, qs, body }
 
   isOnline: (callback) =>
     callback null, running: true

@@ -1,8 +1,21 @@
+{afterEach, beforeEach, describe, it} = global
+{expect} = require 'chai'
+sinon = require 'sinon'
+enableDestroy = require 'server-destroy'
+
+_ = require 'lodash'
+fs = require 'fs'
+path = require 'path'
+slurpFile = (filename) => _.trim fs.readFileSync path.join(__dirname, filename), encoding: 'utf8'
+
+CHALLENGE = slurpFile './fixtures/challenge.b64'
+NEGOTIATE = slurpFile './fixtures/negotiate.b64'
+RESPONSE  = slurpFile './fixtures/response.b64'
+
 HttpManager = require '../src/http-manager.coffee'
 shmock = require 'shmock'
 
 describe 'HttpManager', ->
-
   describe '->formatRequest', ->
     beforeEach ->
       @sut = new HttpManager
@@ -151,3 +164,41 @@ describe 'HttpManager', ->
 
         it 'should not have a result', ->
           expect(@result).to.not.exist
+
+  describe '-> sendNtlmRequest', ->
+    beforeEach ->
+      @server = shmock()
+      enableDestroy @server
+
+    afterEach (done) ->
+      @server.destroy done
+
+    describe 'with authentication information', ->
+      beforeEach ->
+        @sut = new HttpManager {}, {@request}
+
+      describe 'when called', ->
+        beforeEach (done) ->
+          @negotiateRequest = @server
+            .post '/postit'
+            .set 'Authorization', NEGOTIATE
+            .reply 401, '', {'WWW-Authenticate': CHALLENGE}
+
+          @actualRequest = @server
+            .post '/postit'
+            .set 'Authorization', RESPONSE
+            .reply 204
+
+          port = @server.address().port
+          @getRequest = @server.get('/getit').reply 401
+
+          authentication = { username: 'foo@biz.biz', password: 'bar' }
+          options = { uri: "http://localhost:#{port}/postit", method: 'POST' }
+
+          @sut.sendNtlmRequest(authentication, options, done)
+
+        it 'should do a POST negotiate request on the target URL', ->
+          expect(@negotiateRequest.isDone).to.be.true
+
+        it 'should do a POST actual request on the target URL', ->
+          expect(@actualRequest.isDone).to.be.true
